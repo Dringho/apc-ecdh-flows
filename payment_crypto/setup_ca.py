@@ -33,7 +33,7 @@ def create_certificate_authority():
 
 print("Creating AWS Private CA")
 cert_authority_arn = create_certificate_authority()
-gprint("Getting CA CSR")
+print("Getting CA CSR")
 csr = private_ca.get_certificate_authority_csr(CertificateAuthorityArn=cert_authority_arn)['Csr']
 print("self-signing CSR")
 certificate, chain = CryptoUtils.sign_with_private_ca(cert_authority_arn, csr, {
