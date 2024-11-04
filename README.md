@@ -36,12 +36,9 @@ pip3 install -r requirements.txt
 You also need local AWS Credentials that have access to AWS Payment Cryptography and AWS Private CA
 
 ## Execute
-Simulate the three flows of this Demo. This will create a Private CA if it wasn't previously created, and the needed AWS Payment Cryptography cryptographic keys
+Simulate the three flows of this Demo. This will create a Private CA and the needed AWS Payment Cryptography cryptographic key the first time is ran.
+These keys and CA will stay created until you call the tear_down.py script.
 
-The three flows implemented are
-1. RESET PIN: When a user forgets it's PIN and you want to randomly generate a new one and show it to them, storing the PVV on the backend.
-2. SET PIN: When a user wants to set an arbitrary PIN, and the backend stores the PVV.
-3. REVEAL PIN: When you want to obtain the pinblock from an encrypted pinblock for some very niche and specific use-cases
 ```
 python3 payment_crypto/main.py
 ```
