@@ -141,8 +141,7 @@ class Backend:
         # get AWS Payment Cryptography Certificates
         apc_ca_certificate, apc_certificate = self.get_apc_certificates()
         # Derive ECDH symmetric key
-        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_ca_certificate, apc_certificate,
-                                                                    private_key, shared_info)
+        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_certificate, private_key, shared_info)
         # encrypt pinblock with Derived Key
         encrypted_pin_block = CryptoUtils.generate_pin_block_iso_4(derived_key, pin, pan)
         # generate Certificate Signing Request

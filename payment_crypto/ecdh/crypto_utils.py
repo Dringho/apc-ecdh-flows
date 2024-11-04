@@ -4,8 +4,8 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.kdf.concatkdf import ConcatKDFHash
-from Crypto.Hash import CMAC
-from Crypto.Cipher import AES
+# from Crypto.Hash import CMAC
+# from Crypto.Cipher import AES
 import psec
 import psec.pinblock
 import binascii
@@ -27,10 +27,6 @@ class CryptoUtils:
             x509.NameAttribute(NameOID.COMMON_NAME, "mysite.com"),
         ])).sign(private_key, hashes.SHA256())
 
-        # Write our CSR out to disk to debug
-        with open("csr.pem", "wb") as f:
-            f.write(csr.public_bytes(serialization.Encoding.PEM))
-
         return csr
 
     @staticmethod
@@ -45,8 +41,7 @@ class CryptoUtils:
         return kms_client.generate_random(NumberOfBytes=32)["Plaintext"]
 
     @staticmethod
-    def generate_ecc_symmetric_key_client(ca_certificate, certificate, krd_private_key, info):
-        # TODO: Validate certificate signed with CA Certificate
+    def generate_ecc_symmetric_key_client(certificate, krd_private_key, info):
         pem = base64.b64decode(certificate)
         certificate = x509.load_pem_x509_certificate(pem)
         shared_key = krd_private_key.exchange(

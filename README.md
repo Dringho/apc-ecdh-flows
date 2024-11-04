@@ -1,25 +1,52 @@
-
 # AWS Payment Crypto ECDH Pin Set/Reveal flows
 
-Setup
+This repository contains a sample for three specific AWS Payment Cryptography Use Cases:
+1. RESET PIN: When a user forgets it's PIN and you want to randomly generate a new one and show it to them, storing the PVV on the backend. 
+2. SET PIN: When a user wants to set an arbitrary PIN, and the backend stores the PVV.
+3. REVEAL PIN: When you want to obtain the pinblock from an encrypted pinblock for some very niche and specific use-cases
+
+These use cases are implemented using ECDH Key Agreement to derive a symmetric key which is used to encrypt the pinblock between the device and AWS Payment Cryptography using ISO_FORMAT_4. As part of the implementation a Certificate Authority is needed, this demo implements it using AWS Private CA with short-lived certificates. 
+
+## Flows
+### Reset PIN
+![PIN Reset](images/PIN-Reset.png?raw=true "PIN Reset")
+
+### Select PIN
+![PIN Select](images/PIN-Select.png?raw=true "PIN Select")
+
+### Reveal PIN
+![PIN Reveal](images/PIN-Reveal.png?raw=true "PIN Reveal")
+
+## Cost
+The following costs represent the us-east-1 (North Virginia) AWS Region, prices may vary across regions.
+
+1. AWS Private CA for short-lived certificates has a pricing of US$ 50/month per CA.
+2. Each AWS Payment Cryptography key is charged US$ 1 per key/month, and this demo uses 4 keys
+3. Each AWS Payment Cryptography API is charged at US$ 2 per 10,000 API Calls, this demo does less than 50
+
+You can stop the costs by calling the tear_down.py script included, which deletes all created assets.
+
+## Setup
 
 Generate a Python Virtual Environment and install required libraries
 ```
 python3 -m venv .venv
 pip3 install -r requirements.txt
 ```
+You also need local AWS Credentials that have access to AWS Payment Cryptography and AWS Private CA
 
-Generate an AWS Private CA, this has a US$ 50 USD/month cost
-```
-python3 payment_crypto/setup_ca.py
-```
-The output of this script will be a line `export CA_ARN='xxxxxxxxx'`, execute that line to continue.
+## Execute
+Simulate the three flows of this Demo. This will create a Private CA if it wasn't previously created, and the needed AWS Payment Cryptography cryptographic keys
 
-Simulate the three Flows of this Demo
+The three flows implemented are
+1. RESET PIN: When a user forgets it's PIN and you want to randomly generate a new one and show it to them, storing the PVV on the backend.
+2. SET PIN: When a user wants to set an arbitrary PIN, and the backend stores the PVV.
+3. REVEAL PIN: When you want to obtain the pinblock from an encrypted pinblock for some very niche and specific use-cases
 ```
 python3 payment_crypto/main.py
 ```
 
+## Clean Up
 Clean up resources (including CA)
 ```
 python3 payment_crypto/tear_down.py

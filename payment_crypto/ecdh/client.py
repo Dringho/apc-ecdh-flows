@@ -16,8 +16,7 @@ class Client:
         # get AWS Payment Cryptography Certificates
         apc_ca_certificate, apc_certificate = backend.get_apc_certificates()
         # Derive ECDH symmetric key
-        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_ca_certificate, apc_certificate,
-                                                                    private_key, shared_info)
+        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_certificate, private_key, shared_info)
         # encrypt pinblock with Derived Key
         encrypted_pin_block = CryptoUtils.generate_pin_block_iso_4(derived_key, pin, pan)
         # generate Certificate Signing Request
@@ -34,8 +33,7 @@ class Client:
         # get AWS Payment Cryptography Certificates
         apc_ca_certificate, apc_certificate = backend.get_apc_certificates()
         # Derive ECDH symmetric key
-        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_ca_certificate, apc_certificate,
-                                                                    private_key, shared_info)
+        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_certificate, private_key, shared_info)
         # generate Certificate Signing Request
         csr = CryptoUtils.generate_certificate_signing_request(private_key)
         # get ECDH encrypted pinblock
@@ -54,8 +52,7 @@ class Client:
         # get AWS Payment Cryptography Certificates
         apc_ca_certificate, apc_certificate = backend.get_apc_certificates()
         # Derive ECDH symmetric key
-        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_ca_certificate, apc_certificate,
-                                                                    private_key, shared_info)
+        derived_key = CryptoUtils.generate_ecc_symmetric_key_client(apc_certificate, private_key, shared_info)
         # generate Certificate Signing Request
         csr = CryptoUtils.generate_certificate_signing_request(private_key)
         # get ECDH encrypted pinblock
