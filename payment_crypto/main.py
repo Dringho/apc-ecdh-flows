@@ -15,18 +15,18 @@ pan = "1234567889012345"
 print("FLOW #1: Generating a random PIN for CC and revealing it for the user to memorize")
 new_pin = client.pin_reset(pan, backend)
 new_pin_pvv = backend.pvv
-print("New Pin is %s" % new_pin)
+print("New Pin is %s, PVV is %s" % (new_pin, new_pin_pvv))
 
 
 set_pin = "1234"
-print("FLOW #2: Setting an arbitrary PIN %s and obtaining it's PVV and encrypted pinblock" % 1234)
+print("FLOW #2: Setting an arbitrary PIN %s obtaining it's PVV and encrypted pinblock" % 1234)
 client.set_pin(set_pin, pan, backend)
 set_pin_pvv = backend.pvv
 encrypted_pinblock = backend.tmp_pek_pinblock
 print("Encrypted pinblock is %s, PVV is %s" % (encrypted_pinblock, set_pin_pvv))
 
 
-print("FLOW #3: Revealing the PIN hidden in Encrypted Pinblock")
+print("FLOW #3: Revealing the PIN")
 revealed_pin = client.pin_reveal(encrypted_pinblock, pan, backend)
 print("Revealed PIN %s" % revealed_pin)
 if revealed_pin == set_pin:
